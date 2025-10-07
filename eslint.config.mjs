@@ -10,29 +10,9 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  ...compat.extends('prettier'),
+  ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
   {
-    ignores: [
-      'node_modules/**',
-      '.next/**',
-      'out/**',
-      'build/**',
-      'next-env.d.ts',
-      '*.config.js',
-      '*.config.mjs',
-      '*.config.ts',
-    ],
-  },
-  {
-    plugins: {
-      prettier: (await import('eslint-plugin-prettier')).default,
-    },
-    rules: {
-      'prettier/prettier': 'error',
-      '@next/next/no-html-link-for-pages': 'off',
-      'react/jsx-key': 'off',
-    },
+    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
   },
 ];
 
