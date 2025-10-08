@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
+import { SearchInput } from '@/modules/home/ui/components/home-navbar/search-input';
 
 export const HomeNavbar = () => {
   return (
@@ -28,6 +29,9 @@ export const HomeNavbar = () => {
         </div>
 
         {/* Search bar */}
+        <div className={cn('flex flex-1 justify-center max-w-2xl mx-auto')}>
+          <SearchInput />
+        </div>
       </div>
     </div>
   );
