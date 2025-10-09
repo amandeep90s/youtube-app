@@ -22,7 +22,7 @@ export const HomeNavbar = () => {
               alt="Youtube"
               height={32}
               width={32}
-              className={cn('h-14 w-14')}
+              className={cn('h-12 w-12')}
             />
             <p className={cn('text-xl font-semibold tracking-tight')}>Youtube</p>
           </Link>
