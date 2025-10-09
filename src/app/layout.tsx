@@ -3,10 +3,12 @@ import { Inter } from 'next/font/google';
 
 import './globals.css';
 
+import React from 'react';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Youtube Clone',
+  title: 'Youtube App',
   description: 'A simple Youtube clone built with Next.js and TypeScript',
 };
 
