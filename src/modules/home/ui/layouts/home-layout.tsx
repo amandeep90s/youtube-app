@@ -1,8 +1,8 @@
 import React from 'react';
-
-import { SidebarProvider } from '@/components/ui/sidebar';
-import { cn } from '@/lib/utils';
 import { HomeNavbar } from '@/modules/home/ui/components/home-navbar';
+
+import { cn } from '@/lib/utils';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 interface HomeLayoutProps {
   children: React.ReactNode;
