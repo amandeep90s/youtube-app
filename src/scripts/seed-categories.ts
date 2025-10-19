@@ -35,7 +35,7 @@ async function main() {
   }
 }
 
-main().then((r) => {
+main().then(() => {
   console.log('Seeding categories completed.');
   process.exit(0);
 });
