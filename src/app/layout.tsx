@@ -7,6 +7,8 @@ import './globals.css';
 import React from 'react';
 import { TRPCProvider } from '@/trpc/client';
 
+import { Toaster } from '@/components/ui/sonner';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -23,7 +25,10 @@ export default function RootLayout({
     <ClerkProvider afterSignOutUrl={'/'}>
       <html lang="en">
         <body className={`${inter.className} antialiased`}>
-          <TRPCProvider>{children}</TRPCProvider>
+          <TRPCProvider>
+            <Toaster />
+            {children}
+          </TRPCProvider>
         </body>
       </html>
     </ClerkProvider>
