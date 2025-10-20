@@ -38,11 +38,7 @@ export const protectedProcedure = t.procedure.use(async function isAuthed(opts) 
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User is not authenticated' });
   }
 
-  const [user] = await db
-    .select()
-    .from(usersTable)
-    .where(eq(usersTable.clerkId, ctx.clerkUserId))
-    .limit(1);
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.clerkId, ctx.clerkUserId)).limit(1);
 
   if (!user) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not found in database' });

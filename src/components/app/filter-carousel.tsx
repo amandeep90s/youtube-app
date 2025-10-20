@@ -62,9 +62,7 @@ export const FilterCarousel = ({ data, value, isLoading, onSelect }: FilterCarou
           {isLoading &&
             Array.from({ length: 14 }).map((_, index) => (
               <CarouselItem key={index} className={cn('basis-auto pl-3')}>
-                <Skeleton className={cn('h-full w-[100px] px-3 py-1 text-sm font-semibold')}>
-                  &nbsp;
-                </Skeleton>
+                <Skeleton className={cn('h-full w-[100px] px-3 py-1 text-sm font-semibold')}>&nbsp;</Skeleton>
               </CarouselItem>
             ))}
           {!isLoading && (
@@ -78,11 +76,7 @@ export const FilterCarousel = ({ data, value, isLoading, onSelect }: FilterCarou
                 </Badge>
               </CarouselItem>
               {data.map((item) => (
-                <CarouselItem
-                  key={item.value}
-                  className={cn('basis-auto pl-3')}
-                  onClick={() => onSelect(item.value)}
-                >
+                <CarouselItem key={item.value} className={cn('basis-auto pl-3')} onClick={() => onSelect(item.value)}>
                   <Badge
                     variant={item.value === value ? 'default' : 'secondary'}
                     className={cn('cursor-pointer rounded-lg px-3 py-1 whitespace-nowrap')}
