@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 
 export const usersTable = pgTable(
@@ -13,6 +14,10 @@ export const usersTable = pgTable(
   },
   (table) => [uniqueIndex('clerk_id_idx').on(table.clerkId)]
 );
+
+export const userRelations = relations(usersTable, ({ many }) => ({
+  videos: many(videosTable),
+}));
 
 export const categoriesTable = pgTable(
   'categories',
@@ -31,8 +36,15 @@ export const videosTable = pgTable('videos', {
   title: text('title').notNull(),
   description: text('description'),
   userId: uuid('user_id')
-    .references(() => usersTable.id)
+    .references(() => usersTable.id, { onDelete: 'cascade', onUpdate: 'cascade' })
     .notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
+
+export const videoRelations = relations(videosTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [videosTable.userId],
+    references: [usersTable.id],
+  }),
+}));
