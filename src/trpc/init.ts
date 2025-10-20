@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { db } from '@/db';
-import { usersTable } from '@/db/schema';
+import { users } from '@/db/schema';
 import { auth } from '@clerk/nextjs/server';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { eq } from 'drizzle-orm';
@@ -38,7 +38,7 @@ export const protectedProcedure = t.procedure.use(async function isAuthed(opts) 
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User is not authenticated' });
   }
 
-  const [user] = await db.select().from(usersTable).where(eq(usersTable.clerkId, ctx.clerkUserId)).limit(1);
+  const [user] = await db.select().from(users).where(eq(users.clerkId, ctx.clerkUserId)).limit(1);
 
   if (!user) {
     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'User not found in database' });

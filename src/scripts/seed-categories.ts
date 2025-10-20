@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { categoriesTable } from '@/db/schema';
+import { categories } from '@/db/schema';
 
 const categoryNames = [
   'Cars and vehicles',
@@ -28,7 +28,7 @@ async function main() {
       };
     });
 
-    await db.insert(categoriesTable).values(values);
+    await db.insert(categories).values(values);
   } catch (e) {
     console.error('Error seeding categories: ', e);
     process.exit(1);

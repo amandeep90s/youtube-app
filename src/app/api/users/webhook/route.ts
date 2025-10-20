@@ -1,6 +1,6 @@
 import { headers } from 'next/headers';
 import { db } from '@/db';
-import { usersTable } from '@/db/schema';
+import { users } from '@/db/schema';
 import { WebhookEvent } from '@clerk/nextjs/server';
 import { eq } from 'drizzle-orm';
 import { Webhook } from 'svix';
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   if (eventType === 'user.created') {
     const data = evt.data;
 
-    await db.insert(usersTable).values({
+    await db.insert(users).values({
       clerkId: data.id,
       name: `${data.first_name} ${data.last_name}`,
       email: data.email_addresses[0].email_address,
@@ -64,14 +64,14 @@ export async function POST(req: Request) {
     const data = evt.data;
 
     await db
-      .update(usersTable)
+      .update(users)
       .set({
         name: `${data.first_name} ${data.last_name}`,
         email: data.email_addresses[0].email_address,
         imageUrl: data.image_url,
         updatedAt: new Date(),
       })
-      .where(eq(usersTable.clerkId, data.id));
+      .where(eq(users.clerkId, data.id));
   }
 
   // Delete User
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
     if (!evt.data.id) {
       return new Response('Error: Missing user id', { status: 400 });
     }
-    await db.delete(usersTable).where(eq(usersTable.clerkId, evt.data.id));
+    await db.delete(users).where(eq(users.clerkId, evt.data.id));
   }
 
   return new Response('Webhook received', { status: 200 });

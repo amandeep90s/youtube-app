@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core';
 
-export const usersTable = pgTable(
+export const users = pgTable(
   'users',
   {
     id: uuid('id').primaryKey().defaultRandom(),
@@ -15,11 +15,11 @@ export const usersTable = pgTable(
   (table) => [uniqueIndex('clerk_id_idx').on(table.clerkId)]
 );
 
-export const userRelations = relations(usersTable, ({ many }) => ({
-  videos: many(videosTable),
+export const userRelations = relations(users, ({ many }) => ({
+  videos: many(videos),
 }));
 
-export const categoriesTable = pgTable(
+export const categories = pgTable(
   'categories',
   {
     id: uuid('id').primaryKey().defaultRandom(),
@@ -31,20 +31,29 @@ export const categoriesTable = pgTable(
   (table) => [uniqueIndex('name_idx').on(table.name)]
 );
 
-export const videosTable = pgTable('videos', {
+export const categoryRelations = relations(categories, ({ many }) => ({
+  videos: many(videos),
+}));
+
+export const videos = pgTable('videos', {
   id: uuid('id').primaryKey().defaultRandom(),
   title: text('title').notNull(),
   description: text('description'),
   userId: uuid('user_id')
-    .references(() => usersTable.id, { onDelete: 'cascade', onUpdate: 'cascade' })
+    .references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' })
     .notNull(),
+  categoryId: uuid('category_id').references(() => categories.id, { onDelete: 'set null', onUpdate: 'cascade' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const videoRelations = relations(videosTable, ({ one }) => ({
-  user: one(usersTable, {
-    fields: [videosTable.userId],
-    references: [usersTable.id],
+export const videoRelations = relations(videos, ({ one }) => ({
+  user: one(users, {
+    fields: [videos.userId],
+    references: [users.id],
+  }),
+  category: one(categories, {
+    fields: [videos.categoryId],
+    references: [categories.id],
   }),
 }));
